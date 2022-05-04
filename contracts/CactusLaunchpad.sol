@@ -19,13 +19,13 @@ contract CactusLaunchpad is Ownable {
     address public payableAddress;
 
     uint256 public cacttSold;
-    uint256 public hardCap = 6e6 * 10**18; //6,000,000
+    uint256 public hardCap = 3e6 * 10**18; //3,000,000
     uint256 public constant CACTT_PER_BNB = 6000;
     uint256 public constant MIN_CONTRIBUTION = 100000000000000000;
     uint256 public constant MAX_CONTRIBUTION = 10000000000000000000;
 
-    uint256 public endTime = 1651968000; // 2022-07-01 00:00:00
-    uint256 public startTime = 1651363200; // 2022-05-01 00:00:00
+    uint256 public endTime = 1652659200; // 2022-05-09 00:00:00
+    uint256 public startTime = 1652054400; // 2022-05-16 00:00:00
     uint256 private _newPaymentInterval = 2592000;
 
     struct HolderInfo {
@@ -126,6 +126,11 @@ contract CactusLaunchpad is Ownable {
         require(block.timestamp < endTime && !isClosed, "Sale is closed");
         isClosed = true;
         emit CloseSale(true);
+    }
+
+    function setEndTime(uint256 _endTime) public onlyOperator {
+        endTime = _endTime;
+        isClosed = false;
     }
 
     function closeSale() public onlyOperator {
